@@ -7,6 +7,9 @@ pub enum HttpStaticServerError {
     /// IO error
     #[fail(display = "{}", _0)]
     Io(#[cause] io::Error),
+
+    #[fail(display = "Invalid HTTP method: {}", _0)]
+    InvalidHttpMethod(String),
 }
 
 impl From<io::Error> for HttpStaticServerError {

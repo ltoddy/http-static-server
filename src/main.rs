@@ -12,6 +12,8 @@ use std::future::Future;
 
 mod error;
 
+mod http_method;
+
 #[derive(Debug, StructOpt)]
 struct Config {
     #[structopt(short, long)]
@@ -51,8 +53,8 @@ async fn serve(ip: String, port: String) -> Result<()> {
 }
 
 fn spawn_and_log_error<F>(fut: F) -> task::JoinHandle<()>
-    where
-        F: Future<Output=Result<()>> + Send + 'static,
+where
+    F: Future<Output = Result<()>> + Send + 'static,
 {
     task::spawn(async move {
         if let Err(e) = fut.await {
