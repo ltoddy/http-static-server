@@ -2,7 +2,6 @@ use async_std::net::TcpListener;
 use async_std::net::TcpStream;
 use async_std::prelude::*;
 use async_std::task;
-use log::error;
 use log::info;
 use log::Level;
 use structopt::StructOpt;
@@ -13,6 +12,7 @@ use std::future::Future;
 mod error;
 
 mod http_method;
+mod http_request;
 
 #[derive(Debug, StructOpt)]
 struct Config {
