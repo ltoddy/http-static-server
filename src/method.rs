@@ -1,7 +1,7 @@
-use crate::error::HttpStaticServerError;
-use crate::error::Result;
+use std::error;
+use std::fmt;
 
-#[derive(Debug, PartialOrd, PartialEq)]
+#[derive(Debug, Clone, PartialOrd, PartialEq)]
 pub enum HttpMethod {
     Get,
     Post,
@@ -14,8 +14,8 @@ pub enum HttpMethod {
 }
 
 impl HttpMethod {
-    pub fn from(m: &str) -> Result<Self> {
-        match m {
+    pub fn from_str(m: String) -> Result<Self, InvalidHttpMethod> {
+        match m.as_str() {
             "GET" => Ok(HttpMethod::Get),
             "Post" => Ok(HttpMethod::Post),
             "PUT" => Ok(HttpMethod::Put),
@@ -24,7 +24,7 @@ impl HttpMethod {
             "HEAD" => Ok(HttpMethod::Head),
             "CONNECT" => Ok(HttpMethod::Connect),
             "TRACE" => Ok(HttpMethod::Trace),
-            other => Err(HttpStaticServerError::HttpMethod(other.to_owned())),
+            other => Err(InvalidHttpMethod(other.to_owned())),
         }
     }
 
@@ -41,3 +41,14 @@ impl HttpMethod {
         }
     }
 }
+
+#[derive(Debug)]
+pub struct InvalidHttpMethod(String);
+
+impl<'a> fmt::Display for InvalidHttpMethod {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "invalid http method: {}", self.0)
+    }
+}
+
+impl<'a> error::Error for InvalidHttpMethod {}
