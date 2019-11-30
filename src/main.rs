@@ -7,6 +7,7 @@ use async_std::task;
 use log::{info, Level};
 use structopt::StructOpt;
 
+mod content;
 mod method;
 mod request;
 mod status;
