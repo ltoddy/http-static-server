@@ -1,7 +1,9 @@
+use std::ffi::OsStr;
 use std::{error, fmt};
 
 /// see more: https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types
 #[derive(Debug)]
+#[allow(unused_must_use)]
 pub enum ContentType {
     HTML,
     CSS,
@@ -14,18 +16,18 @@ pub enum ContentType {
 }
 
 impl ContentType {
-    pub fn from(source: String) -> Result<Self, InvalidContentType> {
-        match source.as_str() {
+    pub fn from_file_extension(ext: &OsStr) -> Result<Self, InvalidContentType> {
+        match ext.to_str().unwrap() {
             "html" => Ok(ContentType::HTML),
             "css" => Ok(ContentType::CSS),
             "txt" => Ok(ContentType::TEXT),
             "png" => Ok(ContentType::PNG),
-            "jpeg" => Ok(ContentType::PNG),
+            "jpeg" => Ok(ContentType::JPEG),
             "svg" => Ok(ContentType::SVG),
             "pdf" => Ok(ContentType::PDF),
             "gif" => Ok(ContentType::GIF),
 
-            other => Err(InvalidContentType(source)),
+            other => Err(InvalidContentType(String::from(other))),
         }
     }
 }

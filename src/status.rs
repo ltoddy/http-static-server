@@ -2,6 +2,7 @@ use std::fmt;
 
 /// see more: https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status
 #[derive(Debug, Clone, Copy, PartialEq, Hash)]
+#[allow(dead_code)]
 pub enum HttpStatusCode {
     Continue,
 

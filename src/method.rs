@@ -2,6 +2,7 @@ use std::error;
 use std::fmt;
 
 #[derive(Debug, Clone, PartialOrd, PartialEq)]
+#[allow(unused_must_use)]
 pub enum HttpMethod {
     Get,
     Post,

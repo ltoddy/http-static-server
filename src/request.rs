@@ -3,7 +3,10 @@ use std::fmt;
 use std::path::PathBuf;
 use std::str;
 
+use log::info;
+
 use crate::method::HttpMethod;
+use crate::Result;
 
 #[derive(Debug)]
 struct RequestLineNotFound;
@@ -41,10 +44,6 @@ impl fmt::Display for HttpRequest {
 }
 
 impl HttpRequest {
-    pub fn new(method: HttpMethod, uri: PathBuf, version: String) -> Self {
-        Self { method, uri, version }
-    }
-
     fn with_method(&mut self, method: HttpMethod) -> &mut Self {
         self.method = method;
         self
@@ -71,9 +70,10 @@ impl Default for HttpRequest {
     }
 }
 
-pub fn parse_request(buffer: Vec<u8>) -> Result<HttpRequest, Box<dyn error::Error>> {
+pub fn parse_request(buffer: Vec<u8>) -> Result<HttpRequest> {
     let request = String::from_utf8(buffer)?;
     let request_line = request.lines().next().ok_or("request line not found")?;
+    info!("request line: {}", request_line);
 
     let mut parts = request_line.split_whitespace();
 
