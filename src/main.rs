@@ -1,16 +1,15 @@
 use std::error;
 use std::future::Future;
 
-use async_std::net::TcpListener;
-use async_std::net::TcpStream;
+use async_std::net::{TcpListener, TcpStream};
 use async_std::prelude::*;
 use async_std::task;
-use log::info;
-use log::Level;
+use log::{info, Level};
 use structopt::StructOpt;
 
 mod method;
 mod request;
+mod status;
 
 #[derive(Debug, StructOpt)]
 struct Config {
