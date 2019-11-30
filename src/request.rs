@@ -36,23 +36,13 @@ pub struct HttpRequest {
 
 impl fmt::Display for HttpRequest {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        writeln!(
-            f,
-            "{} {} {}\r",
-            self.method.as_str(),
-            self.uri.display(),
-            self.version
-        )
+        writeln!(f, "{} {} {}\r", self.method.as_str(), self.uri.display(), self.version)
     }
 }
 
 impl HttpRequest {
     pub fn new(method: HttpMethod, uri: PathBuf, version: String) -> Self {
-        Self {
-            method,
-            uri,
-            version,
-        }
+        Self { method, uri, version }
     }
 
     fn with_method(&mut self, method: HttpMethod) -> &mut Self {
@@ -93,10 +83,7 @@ pub fn parse_request(buffer: Vec<u8>) -> Result<HttpRequest, Box<dyn error::Erro
 
     let mut request = HttpRequest::default();
 
-    request
-        .with_method(method)
-        .with_uri(uri)
-        .with_version(version);
+    request.with_method(method).with_uri(uri).with_version(version);
 
     Ok(request)
 }
