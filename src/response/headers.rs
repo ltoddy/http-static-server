@@ -2,7 +2,7 @@ use crate::response::content::ContentType;
 
 #[derive(Debug)]
 pub struct Headers {
-    content_type: Option<ContentType>,
+    pub content_type: Option<ContentType>,
 }
 
 impl Headers {

@@ -1,6 +1,7 @@
 use std::{error, fmt};
 
 /// see more: https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Basics_of_HTTP/MIME_types
+#[derive(Debug)]
 pub enum ContentType {
     HTML,
     CSS,
